@@ -3,11 +3,13 @@ package jaeger
 import (
 	"bytes"
 	"context"
-	gen "dolphindb-jaeger/pkg/jaeger/gen-go/jaeger"
 	"fmt"
-	"github.com/apache/thrift/lib/go/thrift"
 	"io"
 	"net/http"
+
+	"github.com/apache/thrift/lib/go/thrift"
+
+	gen "github.com/TangliziGit/dolphindb-jaeger/pkg/jaeger/gen-go/jaeger"
 )
 
 // code copied from

@@ -9,8 +9,8 @@ import (
 	"strconv"
 	"strings"
 
-	gen "dolphindb-jaeger/pkg/jaeger/gen-go/jaeger"
-	"dolphindb-jaeger/pkg/uuid"
+	gen "github.com/TangliziGit/dolphindb-jaeger/pkg/jaeger/gen-go/jaeger"
+	"github.com/TangliziGit/dolphindb-jaeger/pkg/uuid"
 )
 
 var filenameRegex = regexp.MustCompile("^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}-merged.log$")

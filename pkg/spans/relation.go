@@ -1,10 +1,10 @@
 package spans
 
 import (
-	"dolphindb-jaeger/pkg/uuid"
 	"fmt"
 
-	gen "dolphindb-jaeger/pkg/jaeger/gen-go/jaeger"
+	gen "github.com/TangliziGit/dolphindb-jaeger/pkg/jaeger/gen-go/jaeger"
+	"github.com/TangliziGit/dolphindb-jaeger/pkg/uuid"
 )
 
 func NewRelation(tid *uuid.UUID, relType string, parentID string) (ref *gen.SpanRef, err error) {
