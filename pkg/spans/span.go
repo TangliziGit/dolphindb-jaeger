@@ -3,13 +3,13 @@ package spans
 import (
 	"bufio"
 	"fmt"
+	gen "github.com/TangliziGit/dolphindb-jaeger/pkg/jaeger/report/gen-go/jaeger"
 	"os"
 	"path/filepath"
 	"regexp"
 	"strconv"
 	"strings"
 
-	gen "github.com/TangliziGit/dolphindb-jaeger/pkg/jaeger/gen-go/jaeger"
 	"github.com/TangliziGit/dolphindb-jaeger/pkg/uuid"
 )
 
@@ -61,20 +61,20 @@ func NewSpan(tid *uuid.UUID, logType string, tokens []string) (span *gen.Span, e
 	return span, err
 }
 
-func BuildSpanMap(path string) (spanMap map[int64]*gen.Span, err error) {
+func BuildSpanMap(path string) (spanMap map[int64]*gen.Span, tid *uuid.UUID, err error) {
 	file, err := os.Open(path)
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	filename := filepath.Base(path)
 	if filenameRegex.MatchString(filename) == false {
-		return nil, fmt.Errorf("invalid filename: %s", filename)
+		return nil, nil, fmt.Errorf("invalid filename: %s", filename)
 	}
 
-	tid, err := uuid.NewUUID(filename[:36])
+	tid, err = uuid.NewUUID(filename[:36])
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	spanMap = map[int64]*gen.Span{}
@@ -85,7 +85,7 @@ func BuildSpanMap(path string) (spanMap map[int64]*gen.Span, err error) {
 
 		span, err := NewSpan(tid, logType, tokens)
 		if err != nil {
-			return nil, err
+			return nil, nil, err
 		}
 
 		switch logType {

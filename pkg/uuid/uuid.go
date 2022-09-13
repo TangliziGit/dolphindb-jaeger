@@ -2,6 +2,7 @@ package uuid
 
 import (
 	"encoding/binary"
+	"encoding/hex"
 	"fmt"
 )
 
@@ -63,4 +64,11 @@ func (uuid *UUID) Squash() int64 {
 		}
 	}
 	return low
+}
+
+func (uuid *UUID) HexString() string {
+	buf := make([]byte, 16)
+	binary.BigEndian.PutUint64(buf, uint64(uuid.High))
+	binary.BigEndian.PutUint64(buf[8:], uint64(uuid.Low))
+	return hex.EncodeToString(buf)
 }

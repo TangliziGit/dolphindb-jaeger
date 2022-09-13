@@ -2,8 +2,8 @@ package spans
 
 import (
 	"fmt"
+	gen "github.com/TangliziGit/dolphindb-jaeger/pkg/jaeger/report/gen-go/jaeger"
 
-	gen "github.com/TangliziGit/dolphindb-jaeger/pkg/jaeger/gen-go/jaeger"
 	"github.com/TangliziGit/dolphindb-jaeger/pkg/uuid"
 )
 

@@ -1,6 +1,8 @@
 package spans
 
-import gen "github.com/TangliziGit/dolphindb-jaeger/pkg/jaeger/gen-go/jaeger"
+import (
+	gen "github.com/TangliziGit/dolphindb-jaeger/pkg/jaeger/report/gen-go/jaeger"
+)
 
 var tagNames = []string{"level", "stage", "node"}
 

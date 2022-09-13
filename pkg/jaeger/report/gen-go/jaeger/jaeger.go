@@ -8,8 +8,8 @@ import (
 	"database/sql/driver"
 	"errors"
 	"fmt"
-	"time"
 	thrift "github.com/apache/thrift/lib/go/thrift"
+	"time"
 )
 
 // (needed to ensure safety because of naive import list construction.)
@@ -23,8 +23,8 @@ type TagType int64
 const (
   TagType_STRING TagType = 0
   TagType_DOUBLE TagType = 1
-  TagType_BOOL TagType = 2
-  TagType_LONG TagType = 3
+  TagType_BOOL   TagType = 2
+  TagType_LONG   TagType = 3
   TagType_BINARY TagType = 4
 )
 
@@ -75,7 +75,7 @@ return errors.New("Scan value is not int64")
 return nil
 }
 
-func (p * TagType) Value() (driver.Value, error) {
+func (p *TagType) Value() (driver.Value, error) {
   if p == nil {
     return nil, nil
   }
@@ -83,7 +83,7 @@ return int64(*p), nil
 }
 type SpanRefType int64
 const (
-  SpanRefType_CHILD_OF SpanRefType = 0
+  SpanRefType_CHILD_OF     SpanRefType = 0
   SpanRefType_FOLLOWS_FROM SpanRefType = 1
 )
 
@@ -128,7 +128,7 @@ return errors.New("Scan value is not int64")
 return nil
 }
 
-func (p * SpanRefType) Value() (driver.Value, error) {
+func (p *SpanRefType) Value() (driver.Value, error) {
   if p == nil {
     return nil, nil
   }
@@ -143,9 +143,9 @@ return int64(*p), nil
 //  - VLong
 //  - VBinary
 type Tag struct {
-  Key string `thrift:"key,1,required" db:"key" json:"key"`
+  Key   string  `thrift:"key,1,required" db:"key" json:"key"`
   VType TagType `thrift:"vType,2,required" db:"vType" json:"vType"`
-  VStr *string `thrift:"vStr,3" db:"vStr" json:"vStr,omitempty"`
+  VStr  *string `thrift:"vStr,3" db:"vStr" json:"vStr,omitempty"`
   VDouble *float64 `thrift:"vDouble,4" db:"vDouble" json:"vDouble,omitempty"`
   VBool *bool `thrift:"vBool,5" db:"vBool" json:"vBool,omitempty"`
   VLong *int64 `thrift:"vLong,6" db:"vLong" json:"vLong,omitempty"`
@@ -536,7 +536,7 @@ func (p *Tag) String() string {
 //  - Fields
 type Log struct {
   Timestamp int64 `thrift:"timestamp,1,required" db:"timestamp" json:"timestamp"`
-  Fields []*Tag `thrift:"fields,2,required" db:"fields" json:"fields"`
+  Fields []*Tag   `thrift:"fields,2,required" db:"fields" json:"fields"`
 }
 
 func NewLog() *Log {
@@ -709,8 +709,8 @@ func (p *Log) String() string {
 //  - TraceIdHigh
 //  - SpanId
 type SpanRef struct {
-  RefType SpanRefType `thrift:"refType,1,required" db:"refType" json:"refType"`
-  TraceIdLow int64 `thrift:"traceIdLow,2,required" db:"traceIdLow" json:"traceIdLow"`
+  RefType    SpanRefType `thrift:"refType,1,required" db:"refType" json:"refType"`
+  TraceIdLow int64       `thrift:"traceIdLow,2,required" db:"traceIdLow" json:"traceIdLow"`
   TraceIdHigh int64 `thrift:"traceIdHigh,3,required" db:"traceIdHigh" json:"traceIdHigh"`
   SpanId int64 `thrift:"spanId,4,required" db:"spanId" json:"spanId"`
 }
@@ -953,13 +953,13 @@ type Span struct {
   TraceIdHigh int64 `thrift:"traceIdHigh,2,required" db:"traceIdHigh" json:"traceIdHigh"`
   SpanId int64 `thrift:"spanId,3,required" db:"spanId" json:"spanId"`
   ParentSpanId int64 `thrift:"parentSpanId,4,required" db:"parentSpanId" json:"parentSpanId"`
-  OperationName string `thrift:"operationName,5,required" db:"operationName" json:"operationName"`
+  OperationName string  `thrift:"operationName,5,required" db:"operationName" json:"operationName"`
   References []*SpanRef `thrift:"references,6" db:"references" json:"references,omitempty"`
-  Flags int32 `thrift:"flags,7,required" db:"flags" json:"flags"`
+  Flags int32           `thrift:"flags,7,required" db:"flags" json:"flags"`
   StartTime int64 `thrift:"startTime,8,required" db:"startTime" json:"startTime"`
-  Duration int64 `thrift:"duration,9,required" db:"duration" json:"duration"`
-  Tags []*Tag `thrift:"tags,10" db:"tags" json:"tags,omitempty"`
-  Logs []*Log `thrift:"logs,11" db:"logs" json:"logs,omitempty"`
+  Duration int64        `thrift:"duration,9,required" db:"duration" json:"duration"`
+  Tags []*Tag           `thrift:"tags,10" db:"tags" json:"tags,omitempty"`
+  Logs []*Log           `thrift:"logs,11" db:"logs" json:"logs,omitempty"`
 }
 
 func NewSpan() *Span {
@@ -1545,7 +1545,7 @@ func (p *Span) String() string {
 //  - Tags
 type Process struct {
   ServiceName string `thrift:"serviceName,1,required" db:"serviceName" json:"serviceName"`
-  Tags []*Tag `thrift:"tags,2" db:"tags" json:"tags,omitempty"`
+  Tags []*Tag        `thrift:"tags,2" db:"tags" json:"tags,omitempty"`
 }
 
 func NewProcess() *Process {
@@ -1910,9 +1910,9 @@ func (p *ClientStats) String() string {
 //  - SeqNo
 //  - Stats
 type Batch struct {
-  Process *Process `thrift:"process,1,required" db:"process" json:"process"`
-  Spans []*Span `thrift:"spans,2,required" db:"spans" json:"spans"`
-  SeqNo *int64 `thrift:"seqNo,3" db:"seqNo" json:"seqNo,omitempty"`
+  Process *Process   `thrift:"process,1,required" db:"process" json:"process"`
+  Spans []*Span      `thrift:"spans,2,required" db:"spans" json:"spans"`
+  SeqNo *int64       `thrift:"seqNo,3" db:"seqNo" json:"seqNo,omitempty"`
   Stats *ClientStats `thrift:"stats,4" db:"stats" json:"stats,omitempty"`
 }
 
@@ -2344,7 +2344,7 @@ func (p *CollectorClient) SubmitBatches(ctx context.Context, batches []*Batch) (
 
 type CollectorProcessor struct {
   processorMap map[string]thrift.TProcessorFunction
-  handler Collector
+  handler      Collector
 }
 
 func (p *CollectorProcessor) AddToProcessorMap(key string, processor thrift.TProcessorFunction) {
@@ -2362,8 +2362,8 @@ func (p *CollectorProcessor) ProcessorMap() map[string]thrift.TProcessorFunction
 
 func NewCollectorProcessor(handler Collector) *CollectorProcessor {
 
-  self15 := &CollectorProcessor{handler:handler, processorMap:make(map[string]thrift.TProcessorFunction)}
-  self15.processorMap["submitBatches"] = &collectorProcessorSubmitBatches{handler:handler}
+  self15 := &CollectorProcessor{handler: handler, processorMap:make(map[string]thrift.TProcessorFunction)}
+  self15.processorMap["submitBatches"] = &collectorProcessorSubmitBatches{handler: handler}
 return self15
 }
 
