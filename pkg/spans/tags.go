@@ -4,7 +4,7 @@ import (
 	gen "github.com/TangliziGit/dolphindb-jaeger/pkg/jaeger/report/gen-go/jaeger"
 )
 
-var tagNames = []string{"level", "stage", "node"}
+var tagNames = []string{"node"}
 
 func NewTags(tokens []string) []*gen.Tag {
 	var tags []*gen.Tag
